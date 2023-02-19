@@ -1,0 +1,103 @@
+----create database 'superbowl_commercial' to host out data 
+
+create database superbowl_commercials;
+
+---- create a table 'super_bowl_commercial' to host our data
+
+create table super_bowl_commercials(
+	year text ,
+	brand text,
+	superbowl_ad_links text,
+	youtube_link text,
+	funny boolean,
+	shows_product_qyickly boolean,
+	patriotic boolean,
+	celebrity boolean,
+	danger boolean,
+	animal boolean,
+	uses_sex boolean,
+	length integer,
+	estimated_cost money,
+	youtube_views numeric,
+	youtube_likes numeric,
+	tv_viewers numeric);
+  
+  
+--- Loading the imported csv file dataset.
+
+
+	select* from super_bowl_commercials;
+  
+	
+----cleaning the data removing duplicates and blank columns
+
+
+DELETE FROM super_bowl_commercials
+WHERE year IS NULL OR brand IS NULL OR youtube_link IS NULL OR youtube_likes IS NULL;
+
+	
+------brand that has had the most Super Bowl commercials;	
+
+
+
+SELECT brand, COUNT(superbowl_ad_links) as num_commercials
+FROM super_bowl_commercials
+GROUP BY brand
+ORDER BY num_commercials DESC;
+
+
+----How have different characteristics for commercials trended across time?
+
+SELECT year, 
+       COUNT(*) AS num_commercials, 
+       ROUND(AVG(CASE WHEN funny THEN 1 ELSE 0 END)::numeric, 1) AS funny_prop, 
+       ROUND(AVG(CASE WHEN patriotic THEN 1 ELSE 0 END)::numeric, 1) AS patriotic_prop, 
+       ROUND(AVG(CASE WHEN celebrity THEN 1 ELSE 0 END)::numeric, 1) AS celebrity_prop
+FROM super_bowl_commercials
+GROUP BY year
+ORDER BY year ASC;
+
+
+
+----Can you identify any patterns for the most successful commercials on YouTube?
+
+SELECT year, brand, youtube_link, youtube_views
+FROM super_bowl_commercials
+ORDER BY youtube_views DESC
+LIMIT 5;
+
+SELECT year, brand, youtube_link, youtube_views
+FROM super_bowl_commercials
+ORDER BY youtube_views DESC;
+
+
+
+-----Which characteristics are paired most often? Can you find any unusual combinations?
+--we are going to union the tables
+
+SELECT c1.column_name AS characteristic1, c2.column_name AS characteristic2, COUNT(*) AS pair_count
+FROM (
+    SELECT year, brand, superbowl_ad_links, 'funny' AS column_name, funny AS value FROM super_bowl_commercials WHERE funny IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'shows_product_qyickly' AS column_name, shows_product_qyickly AS value FROM super_bowl_commercials WHERE shows_product_qyickly IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'patriotic' AS column_name, patriotic AS value FROM super_bowl_commercials WHERE patriotic IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'celebrity' AS column_name, celebrity AS value FROM super_bowl_commercials WHERE celebrity IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'danger' AS column_name, danger AS value FROM super_bowl_commercials WHERE danger IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'animal' AS column_name, animal AS value FROM super_bowl_commercials WHERE animal IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'uses_sex' AS column_name, uses_sex AS value FROM super_bowl_commercials WHERE uses_sex IS NOT NULL
+) c1
+JOIN (
+    SELECT year, brand, superbowl_ad_links, 'funny' AS column_name, funny AS value FROM super_bowl_commercials WHERE funny IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'shows_product_qyickly' AS column_name, shows_product_qyickly AS value FROM super_bowl_commercials WHERE shows_product_qyickly IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'patriotic' AS column_name, patriotic AS value FROM super_bowl_commercials WHERE patriotic IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'celebrity' AS column_name, celebrity AS value FROM super_bowl_commercials WHERE celebrity IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'danger' AS column_name, danger AS value FROM super_bowl_commercials WHERE danger IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'animal' AS column_name, animal AS value FROM super_bowl_commercials WHERE animal IS NOT NULL
+    UNION ALL SELECT year, brand, superbowl_ad_links, 'uses_sex' AS column_name, uses_sex AS value FROM super_bowl_commercials WHERE uses_sex IS NOT NULL
+) c2 ON c1.year = c2.year AND c1.brand = c2.brand AND c1.superbowl_ad_links = c2.superbowl_ad_links AND c1.column_name < c2.column_name AND c1.value = TRUE AND c2.value = TRUE
+GROUP BY c1.column_name, c2.column_name
+ORDER BY pair_count DESC;
+
+
+
+
+
