@@ -1,0 +1,1152 @@
+---Data cleaning 
+
+ -- Convert from time to string and repeat for 202201-tripdata and 202204 tables
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	CAST(ride_length AS STRING) AS ride_length, 
+	day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+
+
+
+SELECT
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	CAST(ride_length AS STRING) AS ride_length, 
+	day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	CAST(ride_length AS STRING) AS ride_length, 
+	day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	CAST(ride_length AS STRING) AS ride_length, 
+	day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+
+
+-- Checking to make sure update worked
+SELECT  
+	*
+FROM 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+ORDER BY
+	ride_length DESC ;
+
+SELECT  
+	*
+FROM 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+ORDER BY
+	ride_length DESC 
+
+SELECT  
+	*
+FROM 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+ORDER BY
+	ride_length DESC 
+
+
+SELECT  
+	*
+FROM 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+ORDER BY
+	ride_length DESC 
+
+
+ --Checking how many trips are in all tables: use SELECT DISTINCT
+ 
+
+SELECT 
+	COUNT (DISTINCT ride_id)
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+
+
+
+
+SELECT 
+	COUNT (DISTINCT ride_id)
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+
+
+SELECT 
+	COUNT (DISTINCT ride_id)
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+
+
+SELECT 
+	COUNT (DISTINCT ride_id)
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+
+
+-- Update the format for 'day_of_week' from float to string
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	ride_length,  
+	CAST(day_of_week AS STRING) AS day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	ride_length,  
+	CAST(day_of_week AS STRING) AS day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	ride_length,  
+	CAST(day_of_week AS STRING) AS day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+
+
+SELECT 
+        ride_id,
+        rideable_type, 
+        start_at, 
+        ended_at, 
+	ride_length,  
+	CAST(day_of_week AS STRING) AS day_of_week, 
+        start_station_name, 
+        start_station_id, 
+	end_station_name, 
+        end_station_id, 
+        start_lat, 
+	start_lng, 
+        end_lat, 
+        end_lng, 
+        member_casual
+FROM  `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+
+
+
+
+
+-- Update 'day_of_week' values with CASE WHEN in all the tables
+
+UPDATE 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+SET  
+        day_of_week = 
+            CASE
+                WHEN day_of_week = '1' THEN 'Sunday'
+                WHEN day_of_week = '2' THEN 'Monday'
+                WHEN day_of_week = '3' THEN 'Tuesday'
+                WHEN day_of_week = '4' THEN 'Wednesday'
+                WHEN day_of_week = '5' THEN 'Thursday'
+                WHEN day_of_week = '6' THEN 'Friday'
+                WHEN day_of_week = '7' THEN 'Saturday' 
+            END
+WHERE
+        day_of_week IN ('1', '2', '3', '4', '5', '6', '7')
+
+
+
+UPDATE 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+SET  
+        day_of_week = 
+            CASE
+                WHEN day_of_week = '1' THEN 'Sunday'
+                WHEN day_of_week = '2' THEN 'Monday'
+                WHEN day_of_week = '3' THEN 'Tuesday'
+                WHEN day_of_week = '4' THEN 'Wednesday'
+                WHEN day_of_week = '5' THEN 'Thursday'
+                WHEN day_of_week = '6' THEN 'Friday'
+                WHEN day_of_week = '7' THEN 'Saturday' 
+            END
+WHERE
+        day_of_week IN ('1', '2', '3', '4', '5', '6', '7')
+
+
+
+UPDATE 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+SET  
+        day_of_week = 
+            CASE
+                WHEN day_of_week = '1' THEN 'Sunday'
+                WHEN day_of_week = '2' THEN 'Monday'
+                WHEN day_of_week = '3' THEN 'Tuesday'
+                WHEN day_of_week = '4' THEN 'Wednesday'
+                WHEN day_of_week = '5' THEN 'Thursday'
+                WHEN day_of_week = '6' THEN 'Friday'
+                WHEN day_of_week = '7' THEN 'Saturday' 
+            END
+WHERE
+        day_of_week IN ('1', '2', '3', '4', '5', '6', '7')
+
+
+UPDATE 
+	`fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+SET  
+        day_of_week = 
+            CASE
+                WHEN day_of_week = '1' THEN 'Sunday'
+                WHEN day_of_week = '2' THEN 'Monday'
+                WHEN day_of_week = '3' THEN 'Tuesday'
+                WHEN day_of_week = '4' THEN 'Wednesday'
+                WHEN day_of_week = '5' THEN 'Thursday'
+                WHEN day_of_week = '6' THEN 'Friday'
+                WHEN day_of_week = '7' THEN 'Saturday' 
+            END
+WHERE
+        day_of_week IN ('1', '2', '3', '4', '5', '6', '7')
+
+
+-- Select columns from 202201-tripdata to preview
+
+SELECT  
+        ride_id,
+        start_at,
+        ended_at,
+        ride_length,
+        day_of_week, 
+        start_station_name,
+        end_station_name,
+        member_casual
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+ORDER BY 
+        ride_id DESC
+
+
+
+
+-- Select columns from 202202-tripdata to preview
+
+SELECT  
+        ride_id,
+        start_at,
+        ended_at,
+        ride_length,
+        day_of_week, 
+        start_station_name,
+        end_station_name,
+        member_casual
+FROM 
+         `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+ORDER BY 
+        ride_id DESC
+
+
+
+  -- Select columns from 202203-tripdata to preview
+
+SELECT  
+        ride_id,
+        start_at,
+        ended_at,
+        ride_length,
+        day_of_week, 
+        start_station_name,
+        end_station_name,
+        member_casual
+FROM 
+         `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+ORDER BY 
+        ride_id DESC  
+
+
+
+-- Select columns from 202204-tripdata to preview
+
+SELECT  
+        ride_id,
+        start_at,
+        ended_at,
+        ride_length,
+        day_of_week, 
+        start_station_name,
+        end_station_name,
+        member_casual
+FROM 
+         `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+ORDER BY 
+        ride_id DESC   
+
+
+ -- Total Trips: Members vs Casual 
+  -- Looking at overall,monthly member and casual rider totals
+
+
+
+SELECT 
+        TotalTrips,
+        TotalMemberTrips,
+        TotalCasualTrips,
+        ROUND(TotalMemberTrips/TotalTrips,2)*100 AS MemberPercentage,
+        ROUND(TotalCasualTrips/TotalTrips,2)*100 AS CasualPercentage
+FROM 
+        (
+        SELECT
+                COUNT(ride_id) AS TotalTrips,
+                COUNTIF(member_casual = 'member') AS TotalMemberTrips,
+                COUNTIF(member_casual = 'casual') AS TotalCasualTrips,
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        )                 
+
+
+
+
+SELECT 
+        TotalTrips,
+        TotalMemberTrips,
+        TotalCasualTrips,
+        ROUND(TotalMemberTrips/TotalTrips,2)*100 AS MemberPercentage,
+        ROUND(TotalCasualTrips/TotalTrips,2)*100 AS CasualPercentage
+FROM 
+        (
+        SELECT
+                COUNT(ride_id) AS TotalTrips,
+                COUNTIF(member_casual = 'member') AS TotalMemberTrips,
+                COUNTIF(member_casual = 'casual') AS TotalCasualTrips,
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        )                 
+
+
+
+SELECT 
+        TotalTrips,
+        TotalMemberTrips,
+        TotalCasualTrips,
+        ROUND(TotalMemberTrips/TotalTrips,2)*100 AS MemberPercentage,
+        ROUND(TotalCasualTrips/TotalTrips,2)*100 AS CasualPercentage
+FROM 
+        (
+        SELECT
+                COUNT(ride_id) AS TotalTrips,
+                COUNTIF(member_casual = 'member') AS TotalMemberTrips,
+                COUNTIF(member_casual = 'casual') AS TotalCasualTrips,
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        )                 
+
+
+
+SELECT 
+        TotalTrips,
+        TotalMemberTrips,
+        TotalCasualTrips,
+        ROUND(TotalMemberTrips/TotalTrips,2)*100 AS MemberPercentage,
+        ROUND(TotalCasualTrips/TotalTrips,2)*100 AS CasualPercentage
+FROM 
+        (
+        SELECT
+                COUNT(ride_id) AS TotalTrips,
+                COUNTIF(member_casual = 'member') AS TotalMemberTrips,
+                COUNTIF(member_casual = 'casual') AS TotalCasualTrips,
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        )                 
+
+
+-- Avergage Ride Lengths: Members vs Casual  
+ -- Looking at overall, member and casual average ride lengths
+
+SELECT
+        (
+        SELECT 
+                AVG(ride_length)
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        ) AS Avg_ride_length,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        WHERE 
+                member_casual = 'member'
+        ) AS Avgridelength_Member,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        WHERE 
+                member_casual = 'casual'
+        ) AS Avgridelength_Casual
+
+
+SELECT
+        (
+        SELECT 
+                AVG(ride_length)
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        ) AS Avg_ride_length,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        WHERE 
+                member_casual = 'member'
+        ) AS Avgridelength_Member,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        WHERE 
+                member_casual = 'casual'
+        ) AS Avgridelength_Casual
+
+
+
+SELECT
+        (
+        SELECT 
+                AVG(ride_length)
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        ) AS Avg_ride_length,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        WHERE 
+                member_casual = 'member'
+        ) AS Avgridelength_Member,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        WHERE 
+                member_casual = 'casual'
+        ) AS Avgridelength_Casual
+
+
+
+
+SELECT
+        (
+        SELECT 
+                AVG(ride_length)
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        ) AS Avg_ride_length,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        WHERE 
+                member_casual = 'member'
+        ) AS Avgridelength_Member,
+        (
+        SELECT 
+                AVG(ride_length) 
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        WHERE 
+                member_casual = 'casual'
+        ) AS Avgridelength_Casual
+
+
+
+
+-- Finding Maximun Ride Lengths: Members vs Casual  
+ -- Looking at max ride lengths to check for outliers
+
+
+SELECT 
+        member_casual,
+        MAX(ride_length) AS max_ride_length
+FROM 
+      `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`  
+GROUP BY 
+        member_casual
+ORDER BY 
+        ride_length_MAX DESC
+LIMIT 
+        2;
+
+
+SELECT 
+        member_casual,
+        MAX(ride_length) AS max_ride_length
+FROM 
+      `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`  
+GROUP BY 
+        member_casual
+ORDER BY 
+        ride_length_MAX DESC
+LIMIT 
+        4;
+
+
+SELECT 
+        member_casual,
+        MAX(ride_length) AS max_ride_length
+FROM 
+      `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`  
+GROUP BY 
+        member_casual
+ORDER BY 
+        ride_length_MAX DESC
+LIMIT 
+        4;
+
+
+SELECT 
+        member_casual,
+        MAX(ride_length) AS max_ride_length
+FROM 
+      `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`  
+GROUP BY 
+        member_casual
+ORDER BY 
+        ride_length_MAX DESC
+LIMIT 
+        4;
+
+
+        
+ -- Looking at top 50 longest trips for casual riders
+
+SELECT 
+        member_casual,
+        ride_length
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata` 
+WHERE 
+        member_casual = 'casual'
+ORDER BY 
+        ride_length DESC
+LIMIT 
+        50;
+
+
+
+SELECT 
+        member_casual,
+        ride_length
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata` 
+WHERE 
+        member_casual = 'casual'
+ORDER BY 
+        ride_length DESC
+LIMIT 
+        50;
+
+
+
+SELECT 
+        member_casual,
+        ride_length
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata` 
+WHERE 
+        member_casual = 'casual'
+ORDER BY 
+        ride_length DESC
+LIMIT 
+        50;
+
+
+
+SELECT 
+        member_casual,
+        ride_length
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata` 
+WHERE 
+        member_casual = 'casual'
+ORDER BY 
+        ride_length DESC
+LIMIT 
+        50;
+
+-- Looking at median ride length for both casual and member riders
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY member_casual) AS  median_ride_length
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`  
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 2;
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY member_casual) AS  median_ride_length
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`  
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 2;
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY member_casual) AS  median_ride_length
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`  
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 2;
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY member_casual) AS  median_ride_length
+        FROM 
+               `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`  
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 2 ;   
+
+
+
+-- Looking at which days have the highest number of rides
+ 
+SELECT
+        member_casual, 
+        day_of_week AS mode_day_of_week # Top number of day_of_week
+FROM 
+        (
+        SELECT
+                DISTINCT member_casual, day_of_week, ROW_NUMBER() OVER (PARTITION BY member_casual ORDER BY COUNT(day_of_week) DESC) rn
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`  
+        GROUP BY
+                member_casual, day_of_week
+        )
+WHERE
+        rn = 1
+ORDER BY
+        member_casual DESC LIMIT 2
+
+
+
+
+SELECT
+        member_casual, 
+        day_of_week AS mode_day_of_week # Top number of day_of_week
+FROM 
+        (
+        SELECT
+                DISTINCT member_casual, day_of_week, ROW_NUMBER() OVER (PARTITION BY member_casual ORDER BY COUNT(day_of_week) DESC) rn
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`  
+        GROUP BY
+                member_casual, day_of_week
+        )
+WHERE
+        rn = 1
+ORDER BY
+        member_casual DESC LIMIT 4;
+
+
+
+
+SELECT
+        member_casual, 
+        day_of_week AS mode_day_of_week # Top number of day_of_week
+FROM 
+        (
+        SELECT
+                DISTINCT member_casual, day_of_week, ROW_NUMBER() OVER (PARTITION BY member_casual ORDER BY COUNT(day_of_week) DESC) rn
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`  
+        GROUP BY
+                member_casual, day_of_week
+        )
+WHERE
+        rn = 1
+ORDER BY
+        member_casual DESC LIMIT 4;
+
+
+
+
+SELECT
+        member_casual, 
+        day_of_week AS mode_day_of_week # Top number of day_of_week
+FROM 
+        (
+        SELECT
+                DISTINCT member_casual, day_of_week, ROW_NUMBER() OVER (PARTITION BY member_casual ORDER BY COUNT(day_of_week) DESC) rn
+        FROM
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`  
+        GROUP BY
+                member_casual, day_of_week
+        )
+WHERE
+        rn = 1
+ORDER BY
+        member_casual DESC LIMIT 4;
+
+
+
+
+
+-- Looking at median ride lengths per day for the members  
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        WHERE
+                member_casual = 'member'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        WHERE
+                member_casual = 'member'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        WHERE
+                member_casual = 'member'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7 ;   
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        WHERE
+                member_casual = 'member'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7 ;   
+
+
+
+
+
+
+-- Looking at median ride lengths per day for the casual riders  
+ 
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`
+        WHERE
+                member_casual = 'casual'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`
+        WHERE
+                member_casual = 'casual'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`
+        WHERE
+                member_casual = 'casual'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+
+
+
+
+SELECT
+        DISTINCT median_ride_length,
+        member_casual,
+        day_of_week
+FROM 
+        (
+        SELECT 
+                ride_id,
+                member_casual,
+                day_of_week,
+                ride_length,
+                PERCENTILE_DISC(ride_length, 0.5 IGNORE NULLS) OVER(PARTITION BY day_of_week) AS  median_ride_length
+        FROM 
+                `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`
+        WHERE
+                member_casual = 'casual'
+        )
+ORDER BY 
+        median_ride_length DESC LIMIT 7;
+
+
+
+-- Looking at total number of trips per day 
+
+SELECT  
+        day_of_week,
+        COUNT(DISTINCT ride_id) AS total_trips,
+        SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS MemberTrips,
+        SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS CasualTrips
+FROM 
+     `fresh-airfoil-361318.cycling_divvy_tripdata.202201-tripdata`   
+GROUP BY 
+        1
+ORDER BY 
+        total_trips DESC LIMIT 7
+
+
+SELECT  
+        day_of_week,
+        COUNT(DISTINCT ride_id) AS total_trips,
+        SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS MemberTrips,
+        SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS CasualTrips
+FROM 
+     `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`   
+GROUP BY 
+        1
+ORDER BY 
+        total_trips DESC LIMIT 7
+
+
+SELECT  
+        day_of_week,
+        COUNT(DISTINCT ride_id) AS total_trips,
+        SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS MemberTrips,
+        SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS CasualTrips
+FROM 
+     `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`   
+GROUP BY 
+        1
+ORDER BY 
+        total_trips DESC LIMIT 7
+
+
+SELECT  
+        day_of_week,
+        COUNT(DISTINCT ride_id) AS total_trips,
+        SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS MemberTrips,
+        SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS CasualTrips
+FROM 
+     `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`   
+GROUP BY 
+        1
+ORDER BY 
+        total_trips DESC LIMIT 7
+
+
+
+-- Start stations: member vs casual
+ -- Looking at start station counts
+
+SELECT 
+        DISTINCT start_station_name,
+        SUM(
+            CASE WHEN ride_id = ride_id AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS total,
+        SUM(
+            CASE WHEN member_casual = 'member' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS member,
+        SUM(
+            CASE WHEN member_casual = 'casual' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS casual
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`   
+GROUP BY 
+        start_station_name
+ORDER BY 
+        total DESC
+
+
+
+SELECT 
+        DISTINCT start_station_name,
+        SUM(
+            CASE WHEN ride_id = ride_id AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS total,
+        SUM(
+            CASE WHEN member_casual = 'member' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS member,
+        SUM(
+            CASE WHEN member_casual = 'casual' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS casual
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202202-tripdata`   
+GROUP BY 
+        start_station_name
+ORDER BY 
+        total DESC;
+
+
+SELECT 
+        DISTINCT start_station_name,
+        SUM(
+            CASE WHEN ride_id = ride_id AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS total,
+        SUM(
+            CASE WHEN member_casual = 'member' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS member,
+        SUM(
+            CASE WHEN member_casual = 'casual' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS casual
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202203-tripdata`   
+GROUP BY 
+        start_station_name
+ORDER BY 
+        total DESC;
+
+
+SELECT 
+        DISTINCT start_station_name,
+        SUM(
+            CASE WHEN ride_id = ride_id AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS total,
+        SUM(
+            CASE WHEN member_casual = 'member' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS member,
+        SUM(
+            CASE WHEN member_casual = 'casual' AND start_station_name = start_station_name THEN 1 ELSE 0 END
+            ) AS casual
+FROM 
+        `fresh-airfoil-361318.cycling_divvy_tripdata.202204-tripdata`   
+GROUP BY 
+        start_station_name
+ORDER BY 
+        total DESC
